@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Elemment元素的属性</title>
+</head>
+<body>
+  <div>
+    <p id="pelem" title="this is a p element" data-a="a" data-b="b">这个是一个p元素</p>
+  </div>
+  <button id="btn">show all attr</button>
+  <div id="box"></div>
+  <script>
+    window.onload = function(){
+      var pElem = document.getElementById("pelem");
+      var btnElem = document.getElementById("btn");
+      var boxElem = document.getElementById("box");
+
+      btnElem.onclick = function(){
+        console.log(pElem.attributes)
+        console.log(pElem.getAttribute("title"))
+        console.log(pElem.dataset)
+        pElem.setAttribute("title","aaa")
+      }
+      
+    }
+  </script>
+</body>
+</html>
