@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>使用类</title>
+  <style>
+    .text-color{
+      color: red;
+    }
+    .bg-color{
+      background: blue;
+    }
+  </style>
+</head>
+<body>
+  <div class="text-color" id="div">
+    <p>测试文本内容</p>
+  </div>
+  <button id="btn">ShowClass</button>
+  <button id="btn1">AddClass</button>
+  <button id="btn2">ToggleClass</button>
+  <div id="box">
+
+  </div>
+  <script>
+    window.onload = function(){
+      var divElem = document.getElementById("div");
+      var btnElem = document.getElementById("btn");
+      var btn1Elem = document.getElementById("btn1");
+      var btn2Elem = document.getElementById("btn2");
+      var boxElem = document.getElementById("box");
+      btnElem.onclick = function(){
+        boxElem.innerHTML = divElem.className;
+      };
+      btn1Elem.onclick = function(){
+        // divElem.className += " bg-color"
+        divElem.classList.add("bg-color")
+      };
+      btn2Elem.onclick = function(){
+        divElem.classList.toggle("bg-color")
+      }
+    }
+  </script>
+</body>
+</html>
