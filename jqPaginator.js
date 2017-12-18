@@ -7,13 +7,9 @@
         }
 
         var self = this;
-
         self.$container = $(el);
-
         self.$container.data('jqPaginator', self);
-
         self.init = function () {
-
             if (options.first || options.prev || options.next || options.last || options.page) {
                 options = $.extend({}, {
                     first: '',
@@ -23,7 +19,6 @@
                     page: ''
                 }, options);
             }
-
             self.options = $.extend({}, $.jqPaginator.defaultOptions, options);
 
             self.verify();
@@ -37,47 +32,36 @@
 
         self.verify = function () {
             var opts = self.options;
-
             if (!self.isNumber(opts.totalPages)) {
                 throw new Error('[jqPaginator] type error: totalPages');
             }
-
             if (!self.isNumber(opts.totalCounts)) {
                 throw new Error('[jqPaginator] type error: totalCounts');
             }
-
             if (!self.isNumber(opts.pageSize)) {
                 throw new Error('[jqPaginator] type error: pageSize');
             }
-
             if (!self.isNumber(opts.currentPage)) {
                 throw new Error('[jqPaginator] type error: currentPage');
             }
-
             if (!self.isNumber(opts.visiblePages)) {
                 throw new Error('[jqPaginator] type error: visiblePages');
             }
-
             if (!opts.totalPages && !opts.totalCounts) {
                 throw new Error('[jqPaginator] totalCounts or totalPages is required');
             }
-
             if (!opts.totalPages && !opts.totalCounts) {
                 throw new Error('[jqPaginator] totalCounts or totalPages is required');
             }
-
             if (!opts.totalPages && opts.totalCounts && !opts.pageSize) {
                 throw new Error('[jqPaginator] pageSize is required');
             }
-
             if (opts.totalCounts && opts.pageSize) {
                 opts.totalPages = Math.ceil(opts.totalCounts / opts.pageSize);
             }
-
             if (opts.currentPage < 1 || opts.currentPage > opts.totalPages) {
                 throw new Error('[jqPaginator] currentPage is incorrect');
             }
-
             if (opts.totalPages < 1) {
                 throw new Error('[jqPaginator] totalPages cannot be less currentPage');
             }
@@ -153,15 +137,12 @@
                 visiblePages = self.options.visiblePages,
                 currentPage = self.options.currentPage,
                 totalPages = self.options.totalPages;
-
             if (visiblePages > totalPages) {
                 visiblePages = totalPages;
             }
-
             var half = Math.floor(visiblePages / 2);
             var start = currentPage - half + 1 - visiblePages % 2;
             var end = currentPage + half;
-
             if (start < 1) {
                 start = 1;
                 end = visiblePages;
@@ -170,13 +151,11 @@
                 end = totalPages;
                 start = 1 + totalPages - visiblePages;
             }
-
             var itPage = start;
             while (itPage <= end) {
                 pages.push(itPage);
                 itPage++;
             }
-
             return pages;
         };
 
@@ -218,23 +197,19 @@
 
         self.bindEvents = function () {
             var opts = self.options;
-
             self.$container.off();
             self.$container.on('click', '[jp-role]', function () {
                 var $el = $(this);
                 if ($el.hasClass(opts.disableClass) || $el.hasClass(opts.activeClass)) {
                     return;
                 }
-
                 var pageIndex = +$el.attr('jp-data');
                 if (self.fireEvent(pageIndex, 'change')) {
                     self.switchPage(pageIndex);
                 }
             });
         };
-
         self.init();
-
         return self.$container;
     };
 
@@ -254,7 +229,6 @@
         activeClass: 'active',
         onPageChange: null
     };
-
     $.fn.jqPaginator = function () {
         var self = this,
             args = Array.prototype.slice.call(arguments);
@@ -270,5 +244,4 @@
             return new $.jqPaginator(this, args[0]);
         }
     };
-
 })(jQuery);
