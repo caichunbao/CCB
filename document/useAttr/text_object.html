@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>TextObject</title>
+  <style>
+    span{
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <p id="p_elem">前面的文本内容<span>中间的内容</span>后面的内容</p>
+  <button id="btn">按钮</button>
+  <script type='text/javascript'>
+    window.onload = function(){
+      var pElem = document.getElementById('p_elem');
+      var btnElem = document.getElementById('btn');
+
+      btnElem.onclick = function(){
+        var textElem = pElem.firstChild;
+        console.log(textElem)
+      }
+
+    }
+  </script>
+</body>
+</html>
