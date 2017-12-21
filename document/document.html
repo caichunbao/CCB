@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  </head>
+  <body>
+    <button id='btn'>获取Document信息</button>
+    <div id="result"></div>
+    <script>
+      window.onload = function(){
+        var btn_elem = document.getElementById('btn');
+        var result_elem = document.getElementById('result');
+
+        btn_elem.onclick = function(){
+          result_elem.innerHTML += '文档中当前获得焦点的元素：'+document.activeElement.tagName.toLocaleLowerCase()+'<br>';
+          result_elem.innerHTML += '文档中body元素：'+document.body.tagName.toLocaleLowerCase()+'<br>';
+          result_elem.innerHTML += '文档字符集编码：'+document.characterSet.toLocaleLowerCase()+'<br>';
+          result_elem.innerHTML += '文档字符集编码（可设置）：'+document.charset.toLocaleLowerCase()+'<br>';
+          result_elem.innerHTML += '文档所有子元素的集合：'+document.childNodes+'<br>';
+          result_elem.innerHTML += '文档字符集编码：'+document.characterSet.toLocaleLowerCase()+'<br>';
+          result_elem.innerHTML += '文档字符集编码：'+document.characterSet.toLocaleLowerCase()+'<br>';
+          result_elem.innerHTML += '文档字符集编码：'+document.characterSet.toLocaleLowerCase()+'<br>';
+
+        }
+        
+      }
+    </script>
+  </body>
+</html>

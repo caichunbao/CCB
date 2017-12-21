@@ -13,6 +13,8 @@
     "grunt-cli": "^1.2.0"
   },
   "devDependencies": {
-    "grunt-contrib-uglify": "^3.2.1"
+    "coffeescript": "^2.1.0",
+    "grunt-contrib-uglify": "^3.2.1",
+    "grunt-contrib-watch": "^1.0.0"
   }
 }
