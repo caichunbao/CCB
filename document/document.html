@@ -10,6 +10,34 @@
     <button id='btn'>获取Document信息</button>
     <div id="result"></div>
     <script>
+      /*
+      * DOM通过document提供一些操作页面的属性和方法，赋予开发者操作页面的能力
+      * 
+      * # 节点
+      * 1.子节点 childNodes(所有子节点，包含text节点)
+      * 2.父节点 parentNode
+      * 3.兄弟节点 nextElementSibling previousElementSibling fisrtElementChild lastElementChild
+      * 
+      * # 节点类型(常用)
+      * 1.nodeType === 1 元素节点
+      * 2.nodeType === 2 属性节点
+      * 3.nodeType === 3 文本节点
+      * 4.nodeType === 8 注释节点
+      * 5.nodeType === 9 document节点
+      * 
+      * # 定位
+      * 1.offsetLeft 左外边框到定位父级的左内边框的距离
+      * 2.offsetParent 定位父级元素
+      * 3.getBoudingClientRect() 获取某个元素的信息
+      * 
+      * 
+      * 
+      * 
+      */
+
+
+
+
       window.onload = function(){
         var btn_elem = document.getElementById('btn');
         var result_elem = document.getElementById('result');
