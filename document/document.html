@@ -8,10 +8,12 @@
   </head>
   <body>
     <button id='btn'>获取Document信息</button>
+    <button id='btn1'>显示页面所有元素</button>
     <div id="result"></div>
     <script>
       /*
       * DOM通过document提供一些操作页面的属性和方法，赋予开发者操作页面的能力
+      * DOM(Document Object Model，文档对象模型)允许我们用javascript来探查和操作HTML文档里的内容
       * 
       * # 节点
       * 1.子节点 childNodes(所有子节点，包含text节点)
@@ -42,8 +44,12 @@
       * 
       * 
       * 
-      * 
-      * 
+      * # 修改模型
+      * 1.创建和删除元素 
+      *  -> document.createElement("tagName");document.createTextNode("text")
+      *  -> .removeChild(HTMLElement)
+      * 2.添加元素
+      *  -> .appendChild() .insertBefore(<newElem>,<childElem>)
       * 
       * 
       * 
@@ -57,6 +63,10 @@
       window.onload = function(){
         var btn_elem = document.getElementById('btn');
         var result_elem = document.getElementById('result');
+        
+        var btn1_elem = document.getElementById("btn1");
+
+
 
         btn_elem.onclick = function(){
           result_elem.innerHTML += '文档中当前获得焦点的元素：'+document.activeElement.tagName.toLocaleLowerCase()+'<br>';
@@ -64,10 +74,25 @@
           result_elem.innerHTML += '文档字符集编码：'+document.characterSet.toLocaleLowerCase()+'<br>';
           result_elem.innerHTML += '文档字符集编码（可设置）：'+document.charset.toLocaleLowerCase()+'<br>';
           result_elem.innerHTML += '文档所有子元素的集合：'+document.childNodes+'<br>';
-          result_elem.innerHTML += '文档字符集编码：'+document.characterSet.toLocaleLowerCase()+'<br>';
-          result_elem.innerHTML += '文档字符集编码：'+document.characterSet.toLocaleLowerCase()+'<br>';
-          result_elem.innerHTML += '文档字符集编码：'+document.characterSet.toLocaleLowerCase()+'<br>';
+        }
 
+        btn1_elem.onclick = function(){
+          var elem_arr = document.childNodes;
+          console.log(elem_arr)
+          showAllElem(elem_arr)
+        }
+
+        function showAllElem(elemList){
+          
+          
+          for(var i = 0 ; i < elemList.length ; i++){
+            if(elemList[i].nodeType == '1'){
+              console.log(elemList[i].tagName.toLocaleLowerCase())
+              if(elemList[i].childNodes.length > 0){
+                showAllElem(elemList[i].childNodes)
+              }
+            }
+          }
         }
         
       }
