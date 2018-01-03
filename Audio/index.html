@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>音频播放器</title>
+  </head>
+  <body>
+    <audio controls id="myAudio">
+      <source src="./chengdu.mp3" type="audio/mpeg">
+      您的浏览器不支持 audio 元素。
+    </audio>
+      
+    <button id="btn-play">播放</button>
+    <button id="btn-pause">暂停</button>
+    <button id="btn-volumn">音量</button>
+    <button id="btn-info">更多信息</button>
+
+    <script type="text/javascript">
+      /*
+      * IE 9+、Firefox、Opera、Chrome 和 Safari 都支持 <audio> 标签
+      * 支持的格式：mp3(所有浏览器)、ogg(IE不支持)
+      *
+      *
+      */
+      window.onload = function(){
+        function getElem(id){
+          return document.getElementById(id)
+        }
+        var audioElem = getElem("myAudio");
+        var btnPlayElem = getElem("btn-play");
+        var btnPauseElem = getElem("btn-pause");
+        var btnPauseElem = getElem("btn-pause");
+        var btnVolumnElem = getElem("btn-volumn");
+        var btnInfoElem = getElem("btn-info");
+        console.log(audioElem.readyState)
+        btnPlayElem.onclick = function(){
+          // 播放
+          audioElem.play()
+        }
+
+        btnPauseElem.onclick = function(){
+          // 暂停
+          audioElem.pause()
+        }
+
+        btnVolumnElem.onclick = function(){
+          // 控制音量 0.00-1.00 两位小数
+          console.log(audioElem.volume)
+        }
+
+        btnInfoElem.onclick = function(){
+          console.log(audioElem.duration)
+          console.log(audioElem.currentTime)
+          console.log(audioElem.getStartDate())
+          console.log(audioElem.fastSeek())
+        }
+
+
+      }
+
+
+    </script>
+  </body>
+</html>
