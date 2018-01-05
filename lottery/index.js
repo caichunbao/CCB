@@ -7,18 +7,32 @@
  */
 
 (function(){
-  // 初始化一些变量
-  var index,
-
-  lottery = function(data){
+  /**
+   * 抽奖的函数
+   * 
+   * @param data 
+   * data需要传入触发抽奖的元素{target:HTMLElement}
+   * 
+   */
+  var lottery = function(data){
     var data = data;
     var pointerElem = document.getElementById(data.target);
-    pointerElem.onclick = function(){
+    pointerElem.addEventListener("click",handler)
+
+    /**
+     * 处理抽奖的动画的函数
+     * 
+     * 点击之后，防止多次点击，把点击事件移除掉
+     * 
+     * 当前随机数模拟，正式的通过接口获取
+     * 
+     */ 
+    function handler(){
+      pointerElem.removeEventListener("click",handler)
       var num = Math.ceil(Math.random()*8);
-      console.log(num)
-      var degNum = num*45 + 1800 - Math.ceil(Math.random()*35);
+      var degNum = num*45 + 3600 - Math.ceil(Math.random()*35);
       pointerElem.style.cssText = "transition: all 2s;transform: rotate("+degNum+"deg);";
-      window.setTimeout(function(){
+      setTimeout(function(){
         switch (num) {
           case 1:
             alert("恭喜你获得iWatch");
@@ -49,6 +63,7 @@
             break;
         }
         pointerElem.style.cssText = "transform: rotate(0deg);";
+        pointerElem.addEventListener("click",handler)
       },2000)
     }
   }
