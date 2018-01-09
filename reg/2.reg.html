@@ -19,14 +19,171 @@
       * 3.replace()
       * 4.match()
       * 
+      * # 转义符号
+      *  /s : 空格 
+      *  /S : 非空格
+      *  /d : 数字
+      *  /D : 非数字
+      *  /w : 字符（字母，数组。下划线_）
+      *  /W : 非字符
+      *  . : 任意字符
+      *  \. : 真正的点
+      *  \b : 独立的部分 （起始，结束，空格）
+      *  \B : 非独立的部分
+      *  \1 : 重复的子项 数字1代表第一项 数字2代表第二项
+      *  ^ : 放在[]里面是非的意思，如果放在最开始位置，
+      *  $ : 放在正则最后面，代表结束的意思
+      * 
+      * # 备注
+      *    正则默认区分大小写  加i 不区分大小写
+      *    正则默认匹配成功就结束，不会继续匹配，如果想全部查找  加g 全局匹配
+      *    |：在正则中表示或的意思
+      *    ():正则是一个整体（母亲），小括号分隔开，第一个小括号是第一个子项，第二个是第二个子项
+      * 
+      * # 字符类
+      *    定义：一组相似的元素  []表示 a-z 表示26个字符 0-9 A-Z
+      * 
+      * 
+      * 
+      * # 量词
+      *    定义：正则中不确定字符出现的次数 
+      *    写法：{}
+      *    {2,6} ：最少出现2次，最多出现7次
+      *    {2,} ：最少出现2次
+      *    {2} ：正好出现2次
+      *    {1,} === + ：最少出现1次
+      *    {0,1} === ? ：最多出现1次
+      *    {0,} === * ：最少出现0次
+      * 
+      * # 贪婪与惰性
+      *    *? : 重复任意次，但尽可能少的重复
+      *    +? : 重复一次或多次，但尽可能少的重复
+      *    ?? : 重复零次或一次，但尽可能少的重复
+      *    {m,n}? : 重复m到n次，但尽可能少的重复
+      *    {n,}? : 重复n次以上，但尽可能少的重复
+      *    {n}? : 重复n次，但尽可能少的重复
+      * 
+      * 
+      * # 常用正则
+      *    1.匹配中文 [\u4e00-\u9fa5]
+      *    2.首尾空格 ^\s+|\s+$
+      *
+      *
+      *
+      * # 修饰符
+      *    i ignoreCase的缩写，表示忽略字母的大小写
+      *    m multiline的缩写，更改^和$的含义，使它们分别在任意一行的行首和行尾匹配，而不仅仅在整个字符串的开头和结尾匹配。(在此模式下,$的精确含意是:匹配\n之前的位置以及字符串结束前的位置.)
+      *    g global的缩写，进行全局匹配，即对字符串进行全文匹配，直到字符串遍历结束
+      * 
+      * 
+      * 
+      * 1.test() 
+      *    定义：正则去匹配字符串，如果匹配成功返回真，匹配失败返回假
+      *    写法：正则.test(字符串)
+      * 
+      * 2.search()
+      *    定义：正则去匹配字符串，如果匹配成功，就返回匹配成功位置，如果失败就返回-1
+      *    写法：字符串.search(正则表达式)
+      * 
+      * 3.match()
+      *    定义：正则去匹配字符串，如果匹配成功，就返回匹配成功的数组，如果匹配不成功就返回null
+      *    写法：字符串.match(正则表达式)
+      * 
+      * 4.replace()
+      *    定义：正则去匹配字符串，匹配成功的字符，替换成新的字符串
+      *    写法：字符串.replace(正则表达式，字符串) 第二个参数可以是字符串，也可以是一个回调函数，函数的第一个参数就是匹配成功的字符串，第二个参数就是匹配的第一个子项（第一个小括号中的内容），以此类推...
+      * 
+      * 
+      * 
+      * 
+      * 
+      * 
+      * 
+      * 
       * 
       * 
       */  
+      
 
-
+      var str = "abcdefg";
       var re = /a/;
-      var re1 = new RegExp('a');
+      var re_1 = new RegExp('a','i');
+      
+      console.group("1")
+      console.log(re.test(str))
+      console.log(re_1.test(str))
+      console.log(str.search(re))
+      console.groupEnd()
 
+      var str1 = "357486464re64586464";
+      var re1 = /\D/;
+      console.group("2")
+      console.log(re1.test(str1))
+      console.groupEnd()
+
+      var str2 = "f757khda34hgkua34hknkea568hjkghl345ajgf345las34hg";
+      var re2 = /\d+/g
+      console.group("3")
+      console.log(str2.match(re2));
+      console.groupEnd()
+
+      var str3 = "abc";
+      var re3 = /a/;
+      var re3_1 = /(a)(b)(c)/;
+      console.group("4")
+      console.log(str3.replace(re3,"x"))
+      console.log(str3.match(re3_1))
+      console.groupEnd()
+
+      var str4 = "2018-1-7";
+      var re4 = /(\d+)(-)/g;
+      console.group("5")
+      str4 = str4.replace(re4,function($0,$1,$2){
+        return $1 + "."
+      })
+      console.log(str4)
+      console.groupEnd()
+
+      var str5 = "abc";
+      var re5 = /a[bde]c/
+      var re5_1 = /a[^bde]c/
+      var re5_2 = /a.c/
+      console.group("6")
+      console.log(re5.test(str5))
+      console.log(re5_1.test(str5))
+      console.log(re5_2.test(str5))
+      console.groupEnd()
+
+      var str6 = "eaaghiudaasjgkahweraaksdaaabnaavkehaaawksaafdn"
+      str6 = str6.split("").sort().join("")
+      var value = '';
+      var index = 0;
+      var re6 = /(\w)\1+/g;
+      str6.replace(re6,function($0,$1){
+        if(index<$0.length){
+          index = $0.length;
+          value = $0
+        }
+      })
+      console.group("7")
+      console.log("重复最多的字符是："+value+"重复的次数为："+index)
+      console.groupEnd()
+
+      var str7 = "234412431"
+      var re7 = /^[1-9]\d{4,11}$/
+      console.group("8")
+      console.log(re7.test(str7))
+      console.groupEnd()
+
+
+      var str8 = "    hello   "
+      console.group("9")
+      console.log("("+trim(str8)+")")
+
+      function trim(str){
+        var re8 = /^\s*|\s*$/g
+        return str.replace(re8,"")
+      }
 
 
 

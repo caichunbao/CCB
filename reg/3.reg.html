@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>敏感词过滤</title>
+</head>
+<body>
+  <p>替换前</p>
+  <textarea cols="30" rows="5" placeholder="需要替换的字符"></textarea>
+  <p>替换后</p>
+  <textarea cols="30" rows="5" placeholder="替换后的字符"></textarea>
+  <button id="btn">确定</button>
+  <script type="text/javascript">
+    window.onload = function(){
+      var aT = document.getElementsByTagName('textarea');
+      var btnElem = document.getElementById("btn");
+      var re = /习近平|温家宝|江泽民/g;
+      btnElem.onclick = function(){
+        aT[1].value = aT[0].value.replace(re,function(param){
+          var result = '';
+
+          for(var i = 0 ; i < param.length ; i++){
+            result += "*"
+          }
+
+          return result;
+
+        })
+      }
+    }
+  </script>
+</body>
+</html>
