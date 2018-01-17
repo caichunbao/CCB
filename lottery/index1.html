@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>js跑马灯抽奖效果</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./css/index1.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="header"></div>
+    <div class="main">
+      <div class="con980">
+        <div class="play rel">
+          <p class="btn_arr abs">
+            <input value="点击领奖" id="btn1" type="button" onclick="start()" class="play_btn">
+          </p>
+          <table class="playtab" id="tb" cellpadding="0" cellspacing="1">
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>16</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>12</td>
+              <td>11</td>
+              <td>10</td>
+              <td>9</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    /*
+     * 思路：获取坐标--数组arr
+     * 运行轨迹--获取最外圈数组 runArr
+     * 高亮显示--根据runArr的下标来更换背景色和字体颜色
+     * 速度变化--改变定时器的执行频率 setTimeIterver(function(),time)
+     * 停止点--获取随机数付给runArr，并清除定时器
+     * 加速减速 转动圈数：计数器
+     */
+
+    // 定义二维数组，为了易于维护修改，长宽设为参数m，n
+    function getSide(m, n) {
+      var arr = [m]; //先声明m长度的一维
+      for (var i = 0; i < m; i++) {
+        arr[i] = [n]; //声明n长度的二维  
+        for (var j = 0; j < n; j++) {
+          arr[i][j] = i * n + j; //给数组元素赋值  
+        }
+      }
+      /*
+       * 检测二维数组:
+       * for(var i=0;i<arr.length;i++){  
+       *   document.write("第"+i+"行: "+arr[i]+"<br/>");  
+       * }
+       */
+
+      //获取运动轨迹 -- 最外圈的数组
+      var runArr = [];
+      var tempX = 0, //定义坐标  
+        tempY = 0,
+        direction = "straight",
+        count = 0;
+      //循环条件 tempX tempY在 n和m的长度范围内 
+      while (tempX >= 0 && tempX < n && tempY >= 0 && tempY < m && count < m * n) {
+        count++;
+        runArr.push([tempY, tempX]);
+
+        if (direction == "straight") { //亮块直行的规律  
+          if (tempX == n - 1) {
+            tempY++;
+          } else {
+            tempX++;
+          }
+          if (tempX == n - 1 && tempY == m - 1) { //亮块处于拐点  
+            direction = "turn"; //改变条件 执行下面代码  
+          }
+        } else {
+          if (tempX == 0) { //亮块直行的规律  
+            tempY--;
+          } else {
+            tempX--;
+          }
+          if (tempX == 0 && tempY == 0) {
+            break;
+          }
+        }
+      }
+      return runArr;
+    }
+
+    var stopNum, //停止数  
+      index = 0, //当前亮区位置  
+      prevIndex, //前一位置  
+      speed = 300, //初始速度  
+      timer, //定时器对象  
+      downIndex = 0, //决定在哪一格变慢  
+      cycle = 0, //转动圈数     
+      EndCycle = 0, //设置转几圈后再减速  
+      flag = false, //结束转动标志 为true时停止   
+      speedUp = 0, //加速  
+      tb = document.getElementById("tb"), //获取tb对象   
+      btn = document.getElementById("btn1"), //获取按钮对象  
+      runArr = [];
+    runArr = getSide(5, 5); //初始化数组  
+
+    /*
+     * for(var i=0;i<runArr.length;i++){
+     *   document.write(runArr[i]+"<br/>");
+     * }
+     */
+
+    //定义启动函数  
+    function start() {
+      btn.disabled = true;
+      stopNum = Math.floor(Math.random() * 16); //点击产生随机数，最后将停在次数上   
+      downIndex = Math.floor(Math.random() * 16);
+      EndCycle = 1;
+      clearInterval(timer);
+      cycle = 0;
+      flag = false; //结束转动标志  
+      timer = setInterval(run, speed); //启动定时器  
+    }
+
+    //运行函数  
+    function run() {
+      change(); //背景变化函数  
+      //跑马灯加速  
+      if (flag == false) {
+        if (speedUp == 5) { //走5格后加速  
+          clearInterval(timer); //先清除定时器，再改变速度  
+          speed = 50;
+          timer = setInterval(run, speed);
+        }
+      }
+      //跑N圈后减速  
+      if (cycle == EndCycle + 1 && index == downIndex) {
+        clearInterval(timer);
+        speed = 300;
+        flag = true; //触发结束               
+        timer = setInterval(run, speed); //减速  
+      }
+      //计算转了几圈  
+      if (index >= runArr.length) {
+        index = 0;
+        cycle++;
+      }
+
+      //停止并选中号码  
+      if (flag == true && index == stopNum) {
+        speedUp = 0;
+        clearInterval(timer);
+        btn.disabled = false;
+      }
+    }
+
+    //单元格背景变亮  
+    function change() {
+      tb.rows[runArr[index][0]].cells[runArr[index][1]].className = "playcurr"; //给当前单元格添加样式，换高亮的背景色；  
+      if (index > 0) {
+        prevIndex = index - 1; //前一位置  
+      } else {
+        prevIndex = runArr.length - 1;
+      }
+      tb.rows[runArr[prevIndex][0]].cells[runArr[prevIndex][1]].className = "playnormal"; //光标走过后恢复背景色；  
+      index++;
+      speedUp++;
+    }
+
+    console.log(getSide(2, 2));
+  </script>
+</body>
+
+</html>
