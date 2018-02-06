@@ -1,16 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="zh-cn">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Window</title>
-  </head>
-  <body>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+    <hr>
+    <div class="container">
+        <table class="table table-bordered">
+            <tr>
+                <td>innerHeight</td>
+                <td id="ih"></td>
+                <td>innerWidth</td>
+                <td id="iw"></td>
+            </tr>
+            <tr>
+                <td>outerHeight</td>
+                <td id="oh"></td>
+                <td>outerWidth</td>
+                <td id="ow"></td>
+            </tr>
+            <tr>
+                <td>screen.height</td>
+                <td id="sh"></td>
+                <td>screen.width</td>
+                <td id="sw"></td>
+            </tr>
+        </table>
+    </div>
     <script>
-      window.onload = function(){
-        
-      }  
+        window.onload = function() {
+            document.getElementById("ih").innerHTML = window.innerHeight;
+            document.getElementById("iw").innerHTML = window.innerWidth;
+            document.getElementById("oh").innerHTML = window.outerHeight;
+            document.getElementById("ow").innerHTML = window.outerWidth;
+            document.getElementById("sh").innerHTML = window.screen.height;
+            document.getElementById("sw").innerHTML = window.screen.width;
+
+
+        }
     </script>
-  </body>
+</body>
+
 </html>
