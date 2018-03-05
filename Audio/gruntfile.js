@@ -54,6 +54,19 @@ module.exports = function(grunt){
         }] 
       }
     },
+    imagemin:{
+      dynamic:{
+        files:[{
+          expand:true,
+          cwd:"./public/img",
+          src:["**/*.{png,jpg,gif}"],
+          dest:"./build/img"
+        }],
+        options:{
+          optimizationLevel:3
+        }
+      }
+    },
     watch:{
       es6:{
         files:"./public/js/*.js",
@@ -82,6 +95,7 @@ module.exports = function(grunt){
     grunt.file.delete("build/js")
   })
   grunt.loadNpmTasks('grunt-babel');
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks("grunt-contrib-cssmin")
   grunt.loadNpmTasks("grunt-contrib-uglify")
   grunt.loadNpmTasks('grunt-contrib-watch');

@@ -41,6 +41,46 @@ window.onload = function () {
     console.lg('6');
   };
 
+  //定时器控制进度
+  window.setInterval(function () {
+    // console.log("Start: " + audioElem.buffered.start(0) + " End: "  + audioElem.buffered.end(0));
+    var num = parseInt(audioElem.currentTime) / parseInt(audioElem.duration);
+    window.spanplaybar.style.width = Math.floor(num * 100) + "%";
+  }, 1000);
+
+  //点击控制进度
+  window.progress.onclick = function (ev) {
+    // ev.stopPropagation();
+    // ev.preventDefault();
+    var _self = this;
+    var percent = ev.offsetX / _self.offsetWidth;
+    audioElem.currentTime = audioElem.duration * percent;
+    window.spanplaybar.style.width = Math.floor(percent * 100) + "%";
+  };
+
+  //拖拽控制进度
+  var diffX = 0,
+      flag = false;
+
+  window.spanprogress_op.onmousedown = function (ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    diffX = ev.clientX - this.offsetLeft;
+    flag = true;
+  };
+  window.spanprogress_op.onmousemove = function (ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    if (flag == true) {
+      console.log(diffX + 4 - event.clientX);
+    } else {}
+  };
+  window.spanprogress_op.onmouseover = function (ev) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    flag = false;
+  };
+
   //控制音量 0.00-1.00 两位小数
   // btnVolumnElem.onclick = function(){
   //   console.log(audioElem.volume);

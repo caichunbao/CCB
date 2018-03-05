@@ -68,6 +68,23 @@ audio{
   color: #fff;
 }
 
+.song_number{
+  position: absolute;
+}
+.list .list_item.active .song_number{
+  position: absolute;
+  background: url("../img/wave.gif") no-repeat;
+  height: 10px;
+  width: 10px;
+  text-indent: -99px;
+  overflow: hidden;
+  top: 50%;
+  margin-top: -5px;
+}
+
+.song_title{
+  margin-left: 25px;
+}
 
 .player{
   position: fixed;
@@ -131,7 +148,7 @@ audio{
 
 .player_progress {
   padding-top: 6px;
-  height: 8px;
+  height: 16px;
   cursor: pointer;
 }
 
@@ -147,7 +164,8 @@ audio{
 }
 
 .player_progress_play {
-  width: 30%;
+  transition: all 0.1s linear;
+  width: 0%;
   position: absolute;
   top: 0;
   left: 0;
