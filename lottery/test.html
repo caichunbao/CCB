@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>测试</title>
+  <title>抽奖测试</title>
   <style>
     * {
       padding: 0;
@@ -13,11 +13,13 @@
     }
     
     #lottery {
-      width: 80%;
-      height: 400px;
+      width: 300px;
+      height: 300px;
       margin: 0 auto;
       position: relative;
       border: 1px solid #f60;
+      margin-top: 20px;
+      clear: both
     }
     
     #lottery ul {
@@ -25,13 +27,13 @@
     }
     
     #lottery ul li {
-      height: 60px;
-      width: 60px;
+      height: 100px;
+      width: 100px;
       border: 1px solid #ddd;
-      margin: 10px;
       text-align: center;
-      line-height: 60px;
+      line-height: 100px;
       float: left;
+      box-sizing: border-box
     }
     
     #lottery ul li.active {
@@ -49,21 +51,152 @@
       color: #fff;
       border-radius: 5px;
     }
+    
+    #prize {
+      margin: 10px;
+      height: 40px;
+      line-height: 40px;
+      width: 200px;
+      font-size: 16px;
+      color: #333;
+      float: left;
+      text-indent: 10px;
+      box-sizing: border-box;
+    }
+    
+    #prize-ok {
+      height: 40px;
+      padding: 0 10px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 16px;
+      color: #f60;
+      background: #fff;
+      border: 1px solid #ddd;
+      float: left;
+      margin-top: 10px;
+      cursor: pointer;
+      box-sizing: border-box
+    }
+    
+    .dialog {
+      display: none;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.6);
+      transition: all 0.3s linear;
+    }
+    
+    .dialog-content {
+      background: #fff;
+      width: 200px;
+      height: 40px;
+      margin: 0 auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -130px;
+      margin-top: -50px;
+      text-align: center;
+      padding: 30px;
+      font-size: 20px;
+      line-height: 40px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px beige;
+    }
+    
+    .dialog-close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 30px;
+      width: 30px;
+      text-align: center;
+      line-height: 26px;
+      cursor: pointer;
+    }
+    
+    .zoom {
+      animation: zoom 0.5s linear;
+    }
+    
+    @keyframes zoom {
+      0% {
+        transform: scale(0.6);
+      }
+      30% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
 
 <body>
+  <input type="text" placeholder="填写中奖的序号" id="prize" value="3">
   <div id="lottery">
-
+    <ul>
+      <li class="lottery-item item0 active" data-index="0">0</li>
+      <li class="lottery-item item1" data-index="1">1</li>
+      <li class="lottery-item item2" data-index="2">2</li>
+      <li class="lottery-item item7" data-index="7">7</li>
+      <li>
+        <button id="btn">抽奖</button>
+      </li>
+      <li class="lottery-item item3" data-index="3">3</li>
+      <li class="lottery-item item6" data-index="6">6</li>
+      <li class="lottery-item item5" data-index="5">5</li>
+      <li class="lottery-item item4" data-index="4">4</li>
+    </ul>
   </div>
-  <button id="btn">抽奖</button>
-  <script src="./js/core.js"></script>
+
+  <div class="dialog">
+    <div class="dialog-content">
+      <span class="dialog-close">&times;</span>
+      <p>获奖了</p>
+    </div>
+  </div>
+
+  <script src="./js/core.1.js"></script>
   <script>
     window.onload = function() {
-      lottery.init("lottery");
 
-      document.getElementById("btn").onclick = function() {
-        lottery.roll()
+      function luck_draw() {
+        this.removeEventListener("click", luck_draw)
+        lottery.init({
+          target: "lottery",
+          end: Number(window.prize.value),
+          callback: function(prize) {
+            // alert(1)
+            // document.getElementsByClassName("item" + prize)[0].classList.remove("active")
+            // document.getElementsByClassName("lottery-item")[0].classList.add("active")
+
+            setTimeout(function() {
+              document.getElementsByClassName("dialog")[0].style.display = "block";
+              document.getElementsByClassName("dialog-content")[0].getElementsByTagName("p")[0].innerHTML = "奖品为" + prize;
+              document.getElementsByClassName("dialog-content")[0].classList.add("zoom");
+            }, 1000);
+            // document.getElementsByClassName("dialog-content")[0].classList.add("zoom")
+            document.getElementById("btn").addEventListener("click", luck_draw)
+          }
+        });
+        // lottery.roll();
+      }
+
+      document.getElementById("btn").addEventListener("click", luck_draw);
+
+      document.getElementsByClassName("dialog-close")[0].onclick = function() {
+        // document.getElementsByClassName("dialog")[0].style.display = "none";
+        // for (var i = 1; i < 8; i++) {
+        //   document.getElementsByClassName("item" + i)[0].classList.remove("active")
+        // }
+        // document.getElementsByClassName("lottery-item")[0].classList.add("active")
+        location.reload()
       }
     }
   </script>
